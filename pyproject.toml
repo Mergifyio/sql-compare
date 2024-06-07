@@ -1,0 +1,127 @@
+[tool.poetry]
+name = "sql-compare"
+version = "0.1.0"
+description = "Compare SQL schemas"
+authors = ["Charly Laurent <charly.laurent@mergify.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlparse = "^0.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.8"
+mypy = "^1.10.0"
+pytest = "^8.2.2"
+poethepoet = "^0.26.1"
+deptry = "^0.16.1"
+semgrep = "^1.75.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe]
+include = ["poe.toml"]
+
+[tool.pytest.ini_options]
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+preview = true
+select = [
+    "F",
+    "E",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "D",
+    "UP",
+    "YTT",
+    "ANN",
+    "ASYNC",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "CPY",
+    "C4",
+    "DTZ",
+    "EM",
+    "FA",
+    "ISC",
+    "ICN",
+    "LOG",
+    "G",
+    "INP",
+    "PIE",
+    "T20",
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "SIM",
+    "TID",
+    "TCH",
+    "INT",
+    "ARG",
+    "PTH",
+    "TD",
+    "ERA",
+    "PGH",
+    "PL",
+    "TRY",
+    "FLY",
+    "PERF",
+    "FURB",
+    "RUF",
+]
+ignore = [
+    # NOTE(charly): line-length is up to the formatter
+    "E501",
+    # NOTE(charly): `one-blank-line-before-class` (D203) and
+    # `no-blank-line-before-class` (D211) are incompatible
+    "D203",
+    # NOTE(charly): `multi-line-summary-first-line` (D212) and
+    # `multi-line-summary-second-line` (D213) are incompatible
+    "D213",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "D"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+force-sort-within-sections = true
+lines-after-imports = 2
+known-first-party = ["sql_compare"]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+exclude = [".venv"]
+files = ["sql_compare", "tests"]
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "sqlparse"
+ignore_missing_imports = true
+
+[tool.deptry]
+extend_exclude = ["tests"]

@@ -1,0 +1,24 @@
+name: Continuous Integration
+permissions: read-all
+
+on:
+  pull_request:
+    branches:
+      - main
+      - devs/**
+
+jobs:
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.6
+      - uses: actions/setup-python@v5.1.0
+        with:
+          python-version: ">=3.12"
+      - run: |
+          pip install -r requirements-poetry.txt
+          poetry install --sync
+          poetry run poe linters
+          poetry run poe test
+          poetry build

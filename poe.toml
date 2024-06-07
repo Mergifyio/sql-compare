@@ -1,0 +1,23 @@
+[tool.poe.executor]
+type = "poetry"
+
+[tool.poe.tasks.setup]
+help = "Install poetry virtual environment"
+executor = { type = "simple" }
+cmd = "./tools/poetry-install.sh"
+
+[tool.poe.tasks.linters]
+deps = ["setup"]
+help = "Run linters"
+default_item_type = "cmd"
+sequence = ["ruff check .", "ruff format --check .", "deptry .", "mypy"]
+
+[tool.poe.tasks.semgrep]
+deps = ["setup"]
+help = "Run SAST tools"
+cmd = "semgrep --config=auto --error --timeout=15"
+
+[tool.poe.tasks.test]
+deps = ["setup"]
+help = "Run test suite"
+cmd = "pytest"
