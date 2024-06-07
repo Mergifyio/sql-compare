@@ -12,6 +12,8 @@ production).
 
 ## Installation
 
+test
+
 ```bash
 $ pip install sql-compare
 ```
