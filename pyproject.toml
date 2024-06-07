@@ -6,9 +6,8 @@ authors = ["Charly Laurent <charly.laurent@mergify.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-sqlparse = "^0.5.0"
-
+python = ">=3.12.3,<4.0"
+sqlparse = ">=0.5.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.8"
