@@ -3,3 +3,4 @@
 .mypy_cache
 .git
 .venv
+dist
