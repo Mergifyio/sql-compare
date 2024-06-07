@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sql-compare"
-version = "0.1.1"
+version = "0.1.2"
 description = "Compare SQL schemas"
 authors = ["Charly Laurent <charly.laurent@mergify.com>"]
 readme = "README.md"
