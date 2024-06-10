@@ -9,13 +9,17 @@ on:
 
 jobs:
   test:
+    name: "Test with Python ${{ matrix.python-version }}"
     timeout-minutes: 5
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4.1.6
       - uses: actions/setup-python@v5.1.0
         with:
-          python-version: ">=3.12"
+          python-version: "${{ matrix.python-version }}"
       - run: |
           pip install -r requirements-poetry.txt
           poetry install --sync
