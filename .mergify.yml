@@ -5,7 +5,11 @@ queue_rules:
     allow_inplace_checks: true
     queue_conditions:
       - and: &CheckRuns
-          - check-success=test
+          - check-success=Test with Python 3.8
+          - check-success=Test with Python 3.9
+          - check-success=Test with Python 3.10
+          - check-success=Test with Python 3.11
+          - check-success=Test with Python 3.12
       - "#approved-reviews-by>=1"
       - "#changes-requested-reviews-by=0"
       - "#review-threads-unresolved=0"
