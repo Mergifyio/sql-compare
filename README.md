@@ -2,13 +2,14 @@
 
 Compare SQL schemas.
 
-This package allows to compare two SQL files (or string) to know whether their
+This package allows to compare two SQL files (or strings) to know whether their
 statements are the same or not. The comparison doesn't care about the order of
 the columns in a table or the order of the values in an enumerator. It also
 excludes irrelevant data like comments.
 
 Its main usage is to compare the schemas of two databases (e.g. staging and
-production).
+production). See this [blog post](https://blog.mergify.com/ensuring-seamless-sql-migrations-in-production/)
+that tells about the creation of the package.
 
 ## Installation
 
