@@ -40,7 +40,6 @@ pull_request_rules:
     conditions:
       - base=main
       - label!=manual merge
-      - "check-success=Rule: Conventional Commit (post_check)"
     actions:
       queue:
 
@@ -50,7 +49,6 @@ pull_request_rules:
       - -merged
       - -closed
       - and: *CheckRuns
-      - "check-success=Rule: changelog requirements (post_check)"
       - "#approved-reviews-by=0"
       - "#changes-requested-reviews-by=0"
       - "review-requested!=@devs"
@@ -58,14 +56,3 @@ pull_request_rules:
       request_reviews:
         teams:
           - devs
-
-  - name: changelog requirements
-    conditions: []
-    actions:
-      post_check:
-        title: |
-          {% if check_succeeded %}
-          Changelog requirements are present.
-          {% else %}
-          Changelog requirements are missing.
-          {% endif %}
