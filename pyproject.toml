@@ -39,7 +39,7 @@ ruff = ">=0.4.8,<0.6.0"
 mypy = "^1.10.0"
 pytest = "^8.2.2"
 poethepoet = ">=0.26.1,<0.28.0"
-deptry = "^0.16.1"
+deptry = ">=0.16.1,<0.18.0"
 semgrep = "^1.75.0"
 
 [tool.poetry.urls]
