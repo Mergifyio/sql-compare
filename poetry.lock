@@ -1043,16 +1043,16 @@ files = [
 
 [[package]]
 name = "semgrep"
-version = "1.82.0"
+version = "1.83.0"
 description = "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "semgrep-1.82.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-any.whl", hash = "sha256:231a94c5dc3762fb2379d570f0599923f9d9674af639783fe7fa54c109a9b376"},
-    {file = "semgrep-1.82.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:6f8f87f183f3431ad56cbcd655ac72f8bc7e034037558584a4fcb2099be91c2a"},
-    {file = "semgrep-1.82.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:4dc1f252f13012c37802ed85a24b0f119be0f0f7df9187afbfbe044b5296fd8c"},
-    {file = "semgrep-1.82.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5491f7a5eca282d68e9f41e5e6fb0130966523275192043a0a4e0c1ae2c0f9b3"},
-    {file = "semgrep-1.82.0.tar.gz", hash = "sha256:b9100627b8b4b7adbd26953df9736ce0016f46b0241077c7ca4eaf6f6dbbe557"},
+    {file = "semgrep-1.83.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-any.whl", hash = "sha256:71570e8f65bad2dce1cdb83d312091f09cffd74dc1921d96030093fbdac375ee"},
+    {file = "semgrep-1.83.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:de046b1a58a22debc5732b3a75899efa283740157e8b52923f30fd062be40613"},
+    {file = "semgrep-1.83.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:652a2f013042a594ba60b21b2e4d552db589b1019e0080b83a6afa250ec8e2f4"},
+    {file = "semgrep-1.83.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:60921984a54da11c0abdad5bab7e01a65348e1bf0f24eefdbc9aaba8e37f80a6"},
+    {file = "semgrep-1.83.0.tar.gz", hash = "sha256:012ba8539ab7b6a99a8c130f39d856c7249253e0264ee77fa66bfa559c7b1b91"},
 ]
 
 [package.dependencies]
