@@ -184,3 +184,133 @@ def test_compare_neq(first_sql: str, second_sql: str) -> None:
 def test_statement_type(sql: str, expected_type: str) -> None:
     statement = sql_compare.Statement(sqlparse.parse(sql)[0])
     assert statement.statement_type == expected_type
+
+
+@pytest.mark.parametrize(
+    ("first_sql", "second_sql", "expected_diff"),
+    [
+        (
+            "CREATE TABLE foo (id INT PRIMARY KEY)",
+            "CREATE TABLE foo (id INT UNIQUE)",
+            [
+                [["CREATE", "TABLE", "foo", "(", "id", "INT", "PRIMARY KEY"]],
+                [["CREATE", "TABLE", "foo", "(", "id", "INT", "UNIQUE"]],
+            ],
+        ),
+        (
+            "CREATE TYPE public.colors AS ENUM ('RED', 'GREEN', 'BLUE')",
+            "CREATE TYPE public.colors AS ENUM ('BLUE', 'GREEN', 'RED')",
+            [[], []],
+        ),
+        (
+            "CREATE TYPE public.colors AS ENUM ('RED', 'GREEN', 'BLUE')",
+            "CREATE TYPE public.colors AS ENUM ('YELLOW', 'BLUE', 'RED')",
+            [
+                [
+                    [
+                        "CREATE",
+                        "TYPE",
+                        "public",
+                        ".",
+                        "colors",
+                        "AS",
+                        "ENUM",
+                        "(",
+                        "'BLUE'",
+                        ",",
+                        "'GREEN'",
+                        ",",
+                        "'RED'",
+                    ],
+                ],
+                [
+                    [
+                        "CREATE",
+                        "TYPE",
+                        "public",
+                        ".",
+                        "colors",
+                        "AS",
+                        "ENUM",
+                        "(",
+                        "'BLUE'",
+                        ",",
+                        "'RED'",
+                        ",",
+                        "'YELLOW'",
+                    ],
+                ],
+            ],
+        ),
+        (
+            """
+            CREATE TYPE public.status AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+            CREATE TABLE users (id INT, name VARCHAR(100), status public.status);
+            CREATE INDEX user_status_idx ON users (status);
+            """,
+            """
+            CREATE TYPE public.status AS ENUM ('PENDING', 'APPROVED', 'ARCHIVED');
+            CREATE TABLE logs (id INT, message TEXT);
+            CREATE TABLE users (id INT, name VARCHAR(100), status public.status);
+            CREATE INDEX user_status_idx ON users (status);
+            """,
+            [
+                [
+                    [
+                        "CREATE",
+                        "TYPE",
+                        "public",
+                        ".",
+                        "status",
+                        "AS",
+                        "ENUM",
+                        "(",
+                        "'APPROVED'",
+                        ",",
+                        "'PENDING'",
+                        ",",
+                        "'REJECTED'",
+                        ";",
+                    ],
+                ],
+                [
+                    [
+                        "CREATE",
+                        "TABLE",
+                        "logs",
+                        "(",
+                        "id",
+                        "INT",
+                        ",",
+                        "message",
+                        "TEXT",
+                        ";",
+                    ],
+                    [
+                        "CREATE",
+                        "TYPE",
+                        "public",
+                        ".",
+                        "status",
+                        "AS",
+                        "ENUM",
+                        "(",
+                        "'APPROVED'",
+                        ",",
+                        "'ARCHIVED'",
+                        ",",
+                        "'PENDING'",
+                        ";",
+                    ],
+                ],
+            ],
+        ),
+    ],
+)
+def test_get_diff(
+    first_sql: str,
+    second_sql: str,
+    expected_diff: list[list[list[str]]],
+) -> None:
+    result = sql_compare.get_diff(first_sql, second_sql)
+    assert result == expected_diff

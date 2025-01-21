@@ -41,6 +41,19 @@ def compare(first_sql: str, second_sql: str) -> bool:
     return first_sql_statements == second_sql_statements
 
 
+def get_diff(
+    first_sql: str,
+    second_sql: str,
+) -> list[list[list[str]]]:
+    """Show the difference between two SQL schemas, ignoring differences due to column order and other non-significant SQL changes."""
+    first_set = {Statement(t) for t in sqlparse.parse(first_sql)}
+    second_set = {Statement(t) for t in sqlparse.parse(second_sql)}
+    first_diffs = sorted([stmt.str_tokens for stmt in first_set - second_set])
+    second_diffs = sorted([stmt.str_tokens for stmt in second_set - first_set])
+
+    return [first_diffs, second_diffs]
+
+
 @dataclasses.dataclass
 class Token:
     """Wrapper around `sqlparse.sql.Token`."""
@@ -73,6 +86,13 @@ class Token:
             self.token.ttype == sqlparse.tokens.Punctuation
             and self.token.normalized == ",",
         )
+
+    @property
+    def str_tokens(self) -> list[str]:
+        """Return the token value."""
+        if self.hash.strip():
+            return [self.hash]
+        return []
 
 
 @dataclasses.dataclass
@@ -128,6 +148,11 @@ class TokenList:
 
         return Statement.UNKNOWN_TYPE
 
+    @property
+    def str_tokens(self) -> list[str]:
+        """Return the reconstructed SQL statement from tokens as a list of strings."""
+        return [t.hash for t in self.tokens if not t.ignore]
+
 
 class Statement(TokenList):
     """SQL statement."""
@@ -151,6 +176,11 @@ class Statement(TokenList):
 
         # Only one keyword (e.g.: SELECT, INSERT, DELETE, etc.)
         return keywords[0]
+
+    @property
+    def str_tokens(self) -> list[str]:
+        """Return the reconstructed SQL statement from tokens as a list of strings."""
+        return [t for token in self.tokens for t in token.str_tokens]
 
 
 class UnorderedTokenList(TokenList):
