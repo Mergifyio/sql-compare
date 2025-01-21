@@ -33,13 +33,27 @@ def compare_files(first_file: pathlib.Path, second_file: pathlib.Path) -> bool:
     """Compare two SQL files."""
     return compare(first_file.read_text(), second_file.read_text())
 
-
 def compare(first_sql: str, second_sql: str) -> bool:
     """Compare two SQL strings."""
     first_sql_statements = [Statement(t) for t in sqlparse.parse(first_sql)]
     second_sql_statements = [Statement(t) for t in sqlparse.parse(second_sql)]
     return first_sql_statements == second_sql_statements
 
+
+def get_diff(first_sql_statements: list[Statement], second_sql_statements: list[Statement]) -> tuple[list[list[str]], list[list[str]]]:
+    """
+    Show the difference between two SQL schemas, ignoring differences due to column order and other non significant SQL changes.
+    """
+
+    first_diffs: list[list[str]] = []
+    second_diffs: list[list[str]] = []
+    for i in range(len(first_sql_statements)):
+        if first_sql_statements[i] != second_sql_statements[i]:
+            first_diffs.append(first_sql_statements[i].value)
+            second_diffs.append(second_sql_statements[i].value)
+        i += 1    
+    return sorted([first_diffs, second_diffs])
+    
 
 @dataclasses.dataclass
 class Token:
@@ -151,6 +165,19 @@ class Statement(TokenList):
 
         # Only one keyword (e.g.: SELECT, INSERT, DELETE, etc.)
         return keywords[0]
+    
+    @property
+    def value(self) -> list[str]:
+        """Return the reconstructed SQL statement from tokens as a list of strings, excluding tokens with a hash that is just a space."""
+        def process_token(token) -> list[str]:
+            if isinstance(token, TokenList):
+                return [t for sub_token in token.tokens for t in process_token(sub_token)]
+            if token.hash.strip():
+                return [token.hash]
+            return []
+
+        return [t for token in self.tokens for t in process_token(token)]
+
 
 
 class UnorderedTokenList(TokenList):
