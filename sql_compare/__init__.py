@@ -109,7 +109,7 @@ class TokenList:
         return isinstance(self.token_list, sqlparse.sql.Comment)
 
     @property
-    def tokens(self) -> Generator[Token | TokenList, None, None]:
+    def tokens(self) -> Generator[Token | TokenList]:
         """Yield relevant tokens in a deterministic order."""
         for token in self.token_list.tokens:
             if token.is_group:
@@ -167,7 +167,7 @@ class UnorderedTokenList(TokenList):
         )
 
     @property
-    def tokens(self) -> Generator[Token | TokenList, None, None]:
+    def tokens(self) -> Generator[Token | TokenList]:
         """Yield relevant tokens in a deterministic order."""
         filtered_tokens = [t for t in self.flatten_tokens if not t.ignore]
 
@@ -186,7 +186,7 @@ class UnorderedTokenList(TokenList):
         yield from sorted_tokens
 
     @property
-    def flatten_tokens(self) -> Generator[Token, None, None]:
+    def flatten_tokens(self) -> Generator[Token]:
         """Yield all tokens in the token tree."""
         yield from (Token(t) for t in self.token_list.flatten())
 

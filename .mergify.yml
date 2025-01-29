@@ -9,6 +9,7 @@ queue_rules:
           - check-success=Test with Python 3.10
           - check-success=Test with Python 3.11
           - check-success=Test with Python 3.12
+          - check-success=Test with Python 3.13
       - "#approved-reviews-by>=1"
       - "#changes-requested-reviews-by=0"
       - "#review-threads-unresolved=0"
