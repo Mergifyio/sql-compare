@@ -5,7 +5,6 @@ queue_rules:
     allow_inplace_checks: true
     queue_conditions:
       - and: &CheckRuns
-          - check-success=Test with Python 3.8
           - check-success=Test with Python 3.9
           - check-success=Test with Python 3.10
           - check-success=Test with Python 3.11
