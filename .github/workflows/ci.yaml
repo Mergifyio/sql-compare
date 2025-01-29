@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: actions/setup-python@v5.4.0
@@ -22,7 +22,7 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - run: |
           pip install -r requirements-poetry.txt
-          poetry install --sync
+          poetry sync
           poetry run poe linters
           poetry run poe test
           poetry build
