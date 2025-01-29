@@ -184,3 +184,25 @@ def test_compare_neq(first_sql: str, second_sql: str) -> None:
 def test_statement_type(sql: str, expected_type: str) -> None:
     statement = sql_compare.Statement(sqlparse.parse(sql)[0])
     assert statement.statement_type == expected_type
+
+@pytest.mark.parametrize(
+    ("first_sql", "second_sql", "expected_diff"),
+    [
+        (
+            "CREATE TABLE foo (id INT PRIMARY KEY)",
+            "CREATE TABLE foo (id INT UNIQUE)",
+            (
+                [["CREATE", "TABLE", "foo", "(", "id", "INT", "PRIMARY KEY"],
+                ["CREATE", "TABLE", "foo", "(", "id", "INT", "UNIQUE"]],
+            ),
+        ),
+    ],
+)
+def test_get_diff_table_constraints(first_sql: str, second_sql: str, expected_diff: tuple[list[list[str]], list[list[str]]]) -> None:
+    first_statements = [sql_compare.Statement(t) for t in sqlparse.parse(first_sql)]
+    second_statements = [sql_compare.Statement(t) for t in sqlparse.parse(second_sql)]
+    result = sql_compare.get_diff(first_statements, second_statements)
+    assert result[0] == expected_diff[0]
+    assert result[1] == expected_diff[1]
+    # assert result == expected_diff
+    assert sql_compare.get_diff(first_statements, second_statements) == sql_compare.get_diff(second_statements, first_statements)
