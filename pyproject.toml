@@ -1,6 +1,6 @@
 [project]
 name = "sql-compare"
-version = "0.1.3"
+version = "0"
 description = "Compare SQL schemas"
 authors = [{ name = "Charly Laurent", email = "charly.laurent@mergify.com" }]
 maintainers = [{ name = "Mergify", email = "engineering@mergify.com" }]

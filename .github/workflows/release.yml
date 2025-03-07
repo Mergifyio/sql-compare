@@ -1,6 +1,8 @@
 name: Upload release to PyPI
 on:
-  workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
   pypi-publish:
@@ -17,8 +19,6 @@ jobs:
           python-version: ">=3.12"
       - run: |
           pip install -r requirements-poetry.txt
-          git tag $(poetry version --short)
-          git push origin $(poetry version --short)
           poetry self add poetry-version-plugin
           poetry sync
           poetry build
