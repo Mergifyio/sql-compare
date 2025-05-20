@@ -19,7 +19,6 @@ jobs:
           python-version: 3.12
       - run: |
           pip install -r requirements-poetry.txt
-          poetry self add poetry-dynamic-versioning[plugin]
           poetry sync
           poetry build
       - name: Publish package distributions to PyPI
