@@ -43,7 +43,7 @@ mypy = "^1.15.0"
 pytest = "^8.2.2"
 poethepoet = ">=0.26.1,<0.35.0"
 deptry = ">=0.16.1,<0.24.0"
-semgrep = "^1.75.0"
+semgrep = "^1.122.0"
 
 [build-system]
 requires = ["poetry-core"]

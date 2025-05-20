@@ -158,14 +158,14 @@ files = [
 
 [[package]]
 name = "click"
-version = "8.1.7"
+version = "8.1.8"
 description = "Composable command line interface toolkit"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
-    {file = "click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"},
+    {file = "click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2"},
+    {file = "click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"},
 ]
 
 [package.dependencies]
@@ -1044,14 +1044,14 @@ files = [
 
 [[package]]
 name = "ruamel-yaml"
-version = "0.17.40"
+version = "0.18.10"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 optional = false
-python-versions = ">=3"
+python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "ruamel.yaml-0.17.40-py3-none-any.whl", hash = "sha256:b16b6c3816dff0a93dca12acf5e70afd089fa5acb80604afd1ffa8b465b7722c"},
-    {file = "ruamel.yaml-0.17.40.tar.gz", hash = "sha256:6024b986f06765d482b5b07e086cc4b4cd05dd22ddcbc758fa23d54873cf313d"},
+    {file = "ruamel.yaml-0.18.10-py3-none-any.whl", hash = "sha256:30f22513ab2301b3d2b577adc121c6471f28734d3d9728581245f1e76468b4f1"},
+    {file = "ruamel.yaml-0.18.10.tar.gz", hash = "sha256:20c86ab29ac2153f80a428e1254a8adf686d3383df04490514ca3b79a362db58"},
 ]
 
 [package.dependencies]
@@ -1152,23 +1152,24 @@ files = [
 
 [[package]]
 name = "semgrep"
-version = "1.99.0"
+version = "1.122.0"
 description = "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "semgrep-1.99.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:50ab31116d90dcf6e4a460c1ae622dc7ad80a30c7c042fbdf06f6826454ba6f5"},
-    {file = "semgrep-1.99.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:98d6b99c38accc1a6c4af02ee9cd7f4d0110005f45c77ccf3aa87fa3ba0f91b7"},
-    {file = "semgrep-1.99.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:af48f9f7b3cafb1a2c6739ee6a3b01f21b08c634f090e9dfe3c2803d755e2ca3"},
-    {file = "semgrep-1.99.0-cp38.cp39.cp310.cp311.py37.py38.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:da843a107beccc4e8e67038898c0600b8028085157da2697e23b8637e06428fb"},
-    {file = "semgrep-1.99.0.tar.gz", hash = "sha256:3055a7365baf0d63d27eef4d9ad9e3728137da1c273cbf5c4f6f4e28c694f612"},
+    {file = "semgrep-1.122.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:8d1eda7c9fdb7bda9885a5d846752046cd5056b37ee5e4c92b47030428ecc308"},
+    {file = "semgrep-1.122.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:4b4467a6b40743ea2d2bd798ca5a7750aa4337d3fd3ab7ac03a275f272f52f49"},
+    {file = "semgrep-1.122.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:349246654c2b4435299661a83921de51dc5bd2effd047048792e8243ddad6088"},
+    {file = "semgrep-1.122.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:42fe84f4fbd60a6338437328af933405d9b4e2b8e12bc7a4aceea8d22650311e"},
+    {file = "semgrep-1.122.0-cp39.cp310.cp311.py39.py310.py311-none-win_amd64.whl", hash = "sha256:8ebe5fa37acc4d7f857443825f6673482588190d42da98682f30ae3931d1d5e9"},
+    {file = "semgrep-1.122.0.tar.gz", hash = "sha256:c38b184332761345eef1e0800ab6fb4e682a0ea283060173850e3769979eb5c8"},
 ]
 
 [package.dependencies]
 attrs = ">=21.3"
 boltons = ">=21.0,<22.0"
-click = ">=8.1,<9.0"
+click = ">=8.1.8,<8.2.0"
 click-option-group = ">=0.5,<1.0"
 colorama = ">=0.4.0,<0.5.0"
 defusedxml = ">=0.7.1,<0.8.0"
@@ -1183,7 +1184,7 @@ packaging = ">=21.0"
 peewee = ">=3.14,<4.0"
 requests = ">=2.22,<3.0"
 rich = ">=13.5.2,<13.6.0"
-"ruamel.yaml" = ">=0.16.0,<0.18"
+"ruamel.yaml" = ">=0.18.5"
 tomli = ">=2.0.1,<2.1.0"
 typing-extensions = ">=4.2,<5.0"
 urllib3 = ">=2.0,<3.0"
@@ -1394,4 +1395,4 @@ test = ["big-O", "importlib-resources ; python_version < \"3.9\"", "jaraco.funct
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "4d34c54c525edbc26aa1ab742e82747e8f050b43b9f40372d342c4da8314d3c5"
+content-hash = "b5cf85f48a5d6ce81805bccf1289d62833c20d3c180acd3066e87ce788af43ce"
