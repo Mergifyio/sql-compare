@@ -14,12 +14,11 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: actions/setup-python@v5.5.0
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: 3.12
       - run: |
           pip install -r requirements-poetry.txt
-          poetry self add poetry-dynamic-versioning[plugin]
           poetry sync
           poetry build
       - name: Publish package distributions to PyPI

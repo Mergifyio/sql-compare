@@ -1,6 +1,5 @@
 [project]
 name = "sql-compare"
-version = "0"
 description = "Compare SQL schemas"
 authors = [{ name = "Charly Laurent", email = "charly.laurent@mergify.com" }]
 maintainers = [{ name = "Mergify", email = "engineering@mergify.com" }]
@@ -28,26 +27,39 @@ classifiers = [
     "Topic :: Software Development :: Testing :: Unit",
 ]
 requires-python = ">=3.9"
+dynamic = ["version"]
 
 [project.urls]
 repository = "https://github.com/Mergifyio/sql-compare"
 "Bug Tracker" = "https://github.com/Mergifyio/sql-compare/issues"
+
+[tool.poetry]
+version = "0.0.0"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 sqlparse = ">=0.5.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = ">=0.4.8,<0.10.0"
-mypy = "^1.10.0"
-pytest = "^8.2.2"
-poethepoet = ">=0.26.1,<0.31.0"
-deptry = ">=0.16.1,<0.21.0"
-semgrep = "^1.75.0"
+ruff = ">=0.4.8,<0.12.0"
+mypy = "^1.16.0"
+pytest = "^8.4.0"
+poethepoet = ">=0.26.1,<0.35.0"
+deptry = ">=0.16.1,<0.24.0"
+semgrep = "^1.123.0"
+
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+pattern = "^(?P<base>\\d+(\\.\\d+)*)"
+format = "{base}"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poe]
 include = ["poe.toml"]
