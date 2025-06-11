@@ -46,7 +46,7 @@ mypy = "^1.16.0"
 pytest = "^8.4.0"
 poethepoet = ">=0.26.1,<0.36.0"
 deptry = ">=0.16.1,<0.24.0"
-semgrep = "^1.124.0"
+semgrep = "^1.124.1"
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
