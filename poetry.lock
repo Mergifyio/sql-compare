@@ -1166,18 +1166,18 @@ files = [
 
 [[package]]
 name = "semgrep"
-version = "1.127.1"
+version = "1.128.0"
 description = "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code."
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "semgrep-1.127.1-cp39.cp310.cp311.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:891701fa9914c600219772f30cef849c2ec6d43d2ef531c518f880702e8fa63d"},
-    {file = "semgrep-1.127.1-cp39.cp310.cp311.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:7e277f4a0cc23396341e6ac7d111703b7dffe093776798919cd05c564350bf5d"},
-    {file = "semgrep-1.127.1-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:190bac5209ba14ce3c52e41ebaaa7d1e7282d826eebc0db4635d88d45d30d1e3"},
-    {file = "semgrep-1.127.1-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:068fbd6e35b684356d14e7bb759b40d31d43cd9bfe88e4d209e18f91fda7ff8b"},
-    {file = "semgrep-1.127.1-cp39.cp310.cp311.py39.py310.py311-none-win_amd64.whl", hash = "sha256:80f3b1ef844b192970780ac7e341586f756216f464ee40a1e083baaaaf5d80b7"},
-    {file = "semgrep-1.127.1.tar.gz", hash = "sha256:f4daaf378ce1f698b1babd8d9973e5da1e39322aeb63e8ee01f30c4861806a5a"},
+    {file = "semgrep-1.128.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:b0a9ba352ccc6b7fad69e7208f18ab10373812932402b6c85eeea95986eee480"},
+    {file = "semgrep-1.128.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:27634f9aac8cefa32e0f46f5f0c5ceaae7766eae4b3d0fc586baef60ce4bdd2d"},
+    {file = "semgrep-1.128.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:fcb28cb949b5bb6624b0a2b0162a8d4e9054b57afbf47868fc88b34b63a4428e"},
+    {file = "semgrep-1.128.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:12d01beb623dbb83322982a360250c3f768763c43574d00cbde93040b4429524"},
+    {file = "semgrep-1.128.0-cp39.cp310.cp311.py39.py310.py311-none-win_amd64.whl", hash = "sha256:b60213998b0ceb3200e5b8b5a9984a686bc6d59e0e1be827387ab17561f58b44"},
+    {file = "semgrep-1.128.0.tar.gz", hash = "sha256:8bbb8b16d9e5dcc90be18d8d996893be86ef8d38c40faedd74708e68fa92e6c0"},
 ]
 
 [package.dependencies]
@@ -1409,4 +1409,4 @@ test = ["big-O", "importlib-resources ; python_version < \"3.9\"", "jaraco.funct
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "8860349bcd14013d9b4988bd9f61e8fe968bd431c4bdf4278bd74d915d2a2855"
+content-hash = "328addacc369467e6aa4afcb37680b2505355a9337f81956dfba0da5b016758d"
