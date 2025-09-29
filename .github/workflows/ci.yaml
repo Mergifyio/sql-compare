@@ -26,3 +26,11 @@ jobs:
           poetry run poe linters
           poetry run poe test
           poetry build
+  semgrep:
+    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    container:
+      image: semgrep/semgrep:1.138.0
+    steps:
+      - uses: actions/checkout@v5
+      - run: tools/semgrep

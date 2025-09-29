@@ -15,7 +15,7 @@ sequence = ["ruff check .", "ruff format --check .", "deptry .", "mypy"]
 [tool.poe.tasks.semgrep]
 deps = ["setup"]
 help = "Run SAST tools"
-cmd = "semgrep --config=auto --error --timeout=15"
+cmd = "tools/semgrep"
 
 [tool.poe.tasks.test]
 deps = ["setup"]
