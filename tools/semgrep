@@ -1,0 +1,2 @@
+#!/bin/sh
+semgrep --config=auto --error --timeout=15 .
