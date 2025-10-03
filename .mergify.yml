@@ -2,7 +2,6 @@ extends: .github
 
 queue_rules:
   - name: default
-    allow_inplace_checks: true
     queue_conditions:
       - and: &CheckRuns
           - check-success=Test with Python 3.9
@@ -21,7 +20,6 @@ queue_rules:
     merge_method: squash
 
   - name: lowprio
-    allow_inplace_checks: true
     queue_conditions:
       - and: *CheckRuns
       - "#commits=1"
