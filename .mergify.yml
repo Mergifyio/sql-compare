@@ -1,9 +1,8 @@
 extends: .github
-
 queue_rules:
   - name: default
     queue_conditions:
-      - and: &CheckRuns
+      - and: &a1
           - check-success=Test with Python 3.9
           - check-success=Test with Python 3.10
           - check-success=Test with Python 3.11
@@ -18,10 +17,9 @@ queue_rules:
 
       {{ body }}
     merge_method: squash
-
   - name: lowprio
     queue_conditions:
-      - and: *CheckRuns
+      - and: *a1
       - "#commits=1"
       - author=dependabot[bot]
     merge_method: merge
@@ -36,23 +34,22 @@ pull_request_rules:
       - label!=manual merge
     actions:
       queue:
-
   - name: request review
     conditions:
       - -author=dependabot[bot]
       - -merged
       - -closed
-      - and: *CheckRuns
+      - and: *a1
       - "#approved-reviews-by=0"
       - "#changes-requested-reviews-by=0"
-      - "review-requested!=@devs"
+      - review-requested!=@devs
     actions:
       request_reviews:
         teams:
           - devs
-
 merge_queue:
   max_parallel_checks: 5
+  skip_intermediate_results: true
 priority_rules:
   - name: priority for queue `default`
     conditions:
