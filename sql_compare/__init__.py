@@ -52,9 +52,19 @@ def compare_files(first_file: pathlib.Path, second_file: pathlib.Path) -> bool:
     return compare(first_file.read_text(), second_file.read_text())
 
 
+def diff_files(first_file: pathlib.Path, second_file: pathlib.Path) -> set[Statement]:
+    """Return the set of statements that differ between two SQL files."""
+    return diff(first_file.read_text(), second_file.read_text())
+
+
 def compare(first_sql: str, second_sql: str) -> bool:
     """Compare two SQL strings."""
-    return _parse_statements(first_sql) == _parse_statements(second_sql)
+    return not diff(first_sql, second_sql)
+
+
+def diff(first_sql: str, second_sql: str) -> set[Statement]:
+    """Return the set of statements that differ between two SQL strings."""
+    return _parse_statements(first_sql) ^ _parse_statements(second_sql)
 
 
 def get_diff(

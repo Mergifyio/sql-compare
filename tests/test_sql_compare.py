@@ -102,6 +102,7 @@ import sql_compare
 )
 def test_compare_eq(first_sql: str, second_sql: str) -> None:
     assert sql_compare.compare(first_sql, second_sql)
+    assert not sql_compare.diff(first_sql, second_sql)
 
 
 @pytest.mark.parametrize(
@@ -164,6 +165,7 @@ def test_compare_eq(first_sql: str, second_sql: str) -> None:
 )
 def test_compare_neq(first_sql: str, second_sql: str) -> None:
     assert not sql_compare.compare(first_sql, second_sql)
+    assert sql_compare.diff(first_sql, second_sql)
 
 
 @pytest.mark.parametrize(
