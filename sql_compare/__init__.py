@@ -245,7 +245,7 @@ class UnorderedTokenList(TokenList):
     @property
     def flatten_tokens(self) -> Generator[Token, None, None]:
         """Yield all tokens in the token tree."""
-        yield from (Token(t) for t in self.token_list.flatten())
+        yield from (Token(t) for t in self.token_list.flatten())  # type: ignore[no-untyped-call]
 
     @staticmethod
     def _split_identifiers(tokens: list[Token]) -> SplitIdentifierResult:
