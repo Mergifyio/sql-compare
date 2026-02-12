@@ -41,7 +41,7 @@ python = "^3.9"
 sqlparse = ">=0.5.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = ">=0.4.8,<0.13.0"
+ruff = ">=0.4.8,<0.16.0"
 mypy = "^1.19.1"
 pytest = "^8.4.2"
 poethepoet = ">=0.26.1,<0.38.0"
@@ -135,6 +135,10 @@ ignore = [
     # NOTE(charly): `multi-line-summary-first-line` (D212) and
     # `multi-line-summary-second-line` (D213) are incompatible
     "D213",
+    # Single-module library, __init__.py is the main module
+    "RUF067",
+    # SQL files are always UTF-8
+    "PLW1514",
 ]
 
 [tool.ruff.lint.per-file-ignores]
