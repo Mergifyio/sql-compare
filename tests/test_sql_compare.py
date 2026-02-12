@@ -83,10 +83,26 @@ import sql_compare
             "CREATE INDEX foo_idx ON foo (id1, id2)",
             "CREATE INDEX foo_idx ON foo (id1, id2)",
         ),
+        # Ignore statement order
+        (
+            "CREATE TABLE foo (id INT); CREATE TABLE bar (id INT);",
+            "CREATE TABLE bar (id INT); CREATE TABLE foo (id INT);",
+        ),
+        # Ignore non-SQL content (psql meta-commands)
+        (
+            "\\unrestrict abc123\nCREATE TABLE foo (id INT)",
+            "\\unrestrict xyz789\nCREATE TABLE foo (id INT)",
+        ),
+        # Ignore non-SQL content with different tokens
+        (
+            "CREATE TABLE foo (id INT);\n\\unrestrict abc123\n",
+            "CREATE TABLE foo (id INT);\n\\unrestrict xyz789\n",
+        ),
     ],
 )
 def test_compare_eq(first_sql: str, second_sql: str) -> None:
     assert sql_compare.compare(first_sql, second_sql)
+    assert not sql_compare.diff(first_sql, second_sql)
 
 
 @pytest.mark.parametrize(
@@ -149,6 +165,7 @@ def test_compare_eq(first_sql: str, second_sql: str) -> None:
 )
 def test_compare_neq(first_sql: str, second_sql: str) -> None:
     assert not sql_compare.compare(first_sql, second_sql)
+    assert sql_compare.diff(first_sql, second_sql)
 
 
 @pytest.mark.parametrize(
