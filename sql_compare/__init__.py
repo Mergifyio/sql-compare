@@ -238,9 +238,7 @@ class UnorderedTokenList(TokenList):
         # Sort identifier groups by their hash
         split_result.identifier_groups.sort(key=lambda g: "".join(t.hash for t in g))
         # Join back the tokens in the expected order
-        sorted_tokens = self._join_identifiers(split_result)
-
-        yield from sorted_tokens
+        yield from self._join_identifiers(split_result)
 
     @property
     def flatten_tokens(self) -> Generator[Token, None, None]:
