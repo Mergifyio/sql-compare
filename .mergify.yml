@@ -24,11 +24,10 @@ queue_rules:
       - and: *CheckRuns
       - "#commits=1"
       - author=dependabot[bot]
-    merge_method: merge
+    merge_method: fast-forward
     batch_size: 7
     batch_max_wait_time: 5min
     commit_message_template:
-    queue_branch_merge_method: fast-forward
 pull_request_rules:
   - name: automatic merge
     conditions:
