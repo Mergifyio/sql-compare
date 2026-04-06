@@ -60,3 +60,5 @@ priority_rules:
       - "#review-threads-unresolved=0"
       - "#review-requested=0"
     priority: 2250
+merge_protections_settings:
+  reporting_method: check-runs
