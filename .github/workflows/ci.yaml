@@ -18,10 +18,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.0
       - uses: actions/setup-python@v6.2.0
+        id: target-python
         with:
           python-version: "${{ matrix.python-version }}"
+      # poetry >=2.3 requires Python >=3.10, so install it under a fixed
+      # interpreter and target the matrix Python via `poetry env use`. This keeps
+      # the project tested on every matrix version (including 3.9).
+      - uses: actions/setup-python@v6.2.0
+        with:
+          python-version: "3.12"
       - run: |
           pip install -r requirements-poetry.txt
+          poetry env use "${{ steps.target-python.outputs.python-path }}"
           poetry sync
           poetry run poe linters
           poetry run poe test
