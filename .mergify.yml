@@ -1,65 +1,67 @@
 extends: .github
+shared:
+  check_runs: &CheckRuns
+    - check-success=Test with Python 3.9
+    - check-success=Test with Python 3.10
+    - check-success=Test with Python 3.11
+    - check-success=Test with Python 3.12
+    - check-success=semgrep
+  default_review_cond: &DefaultReviewCond
+    - "#approved-reviews-by>=1"
+    - author = dependabot[bot]
 
 queue_rules:
+  - name: dependencies
+    queue_conditions:
+      - base=main
+      - label!=manual merge
+      - author = dependabot[bot]
+    merge_method: fast-forward
+    batch_size: 7
+    batch_max_wait_time: 5min
+    commit_message_template:
   - name: default
     queue_conditions:
-      - and: &CheckRuns
-          - check-success=Test with Python 3.9
-          - check-success=Test with Python 3.10
-          - check-success=Test with Python 3.11
-          - check-success=Test with Python 3.12
-          - check-success = semgrep
-      - "#approved-reviews-by>=1"
-      - "#changes-requested-reviews-by=0"
-      - "#review-threads-unresolved=0"
-      - "#review-requested=0"
+      - base=main
+      - label!=manual merge
     commit_message_template: |
       {{ title }} (#{{ number }})
 
       {{ body }}
     merge_method: squash
 
-  - name: lowprio
-    queue_conditions:
-      - and: *CheckRuns
-      - "#commits=1"
-      - author=dependabot[bot]
-    merge_method: fast-forward
-    batch_size: 7
-    batch_max_wait_time: 5min
-    commit_message_template:
 pull_request_rules:
-  - name: automatic merge
-    conditions:
-      - base=main
-      - label!=manual merge
-    actions:
-      queue:
-
   - name: request review
     conditions:
       - -author=dependabot[bot]
       - -merged
       - -closed
       - and: *CheckRuns
-      - "#approved-reviews-by=0"
       - "#changes-requested-reviews-by=0"
-      - "review-requested!=@devs"
+      - review-requested!=@devs
+      - not:
+          or: *DefaultReviewCond
     actions:
       request_reviews:
         teams:
           - devs
 
+
+merge_protections:
+  - name: 🤖 Continuous Integration
+    if: []
+    success_conditions:
+      - and: *CheckRuns
+
+  - name: 👀 Review Requirements
+    if: []
+    success_conditions:
+      - or: *DefaultReviewCond
+
+
 merge_queue:
   max_parallel_checks: 5
-priority_rules:
-  - name: priority for queue `default`
-    conditions:
-      - "#approved-reviews-by>=1"
-      - "#changes-requested-reviews-by=0"
-      - "#review-threads-unresolved=0"
-      - "#review-requested=0"
-    priority: 2250
-    allow_checks_interruption: true
+
 merge_protections_settings:
-  reporting_method: check-runs
+  reporting_method: deployments
+  auto_merge_conditions: true
