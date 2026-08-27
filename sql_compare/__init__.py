@@ -185,23 +185,70 @@ class Statement(TokenList):
 
     UNKNOWN_TYPE = "UNKNOWN"
 
+    # Verbs that act on an object, so the type is "<verb> <object>"
+    # (e.g. CREATE TABLE). Anything else stands alone (SELECT, INSERT, ...).
+    # Every one of these is always followed by the keyword naming the object
+    # it acts on, which is what makes taking the next keyword safe. A verb that
+    # acts directly on a name (TRUNCATE foo) must NOT be added: the next
+    # keyword would then be a trailing option, inventing types like
+    # "TRUNCATE CASCADE" and "TRUNCATE RESTART".
+    OBJECT_VERBS: typing.ClassVar[frozenset[str]] = frozenset(
+        {"CREATE", "CREATE OR REPLACE", "ALTER", "DROP", "REFRESH"},
+    )
+    # Keywords that sit between the verb and the object without changing what
+    # the object is: a CREATE TEMPORARY TABLE is still a table, and a
+    # CREATE UNIQUE INDEX is still an index.
+    # Only words that can appear *before* the object are listed: a keyword
+    # that follows it (CONCURRENTLY, CASCADE, ...) is never reached.
+    MODIFIER_KEYWORDS: typing.ClassVar[frozenset[str]] = frozenset(
+        {"TEMPORARY", "TEMP", "GLOBAL", "LOCAL", "UNIQUE", "RECURSIVE"},
+    )
+    # Keywords that qualify the object instead of being it. A MATERIALIZED VIEW
+    # is its own kind of object, so the word is kept and the name continues.
+    OBJECT_QUALIFIERS: typing.ClassVar[frozenset[str]] = frozenset({"MATERIALIZED"})
+    # Verbs sqlparse does not lex as keywords, so they are recovered from the
+    # statement's first token instead of the keyword list.
+    UNLEXED_VERBS: typing.ClassVar[frozenset[str]] = frozenset({"REFRESH"})
+
     @property
     def statement_type(self) -> str:
         """Return the type of SQL statement."""
         keywords: list[str] = [
-            t.normalized for t in self.token_list.tokens if t.is_keyword
+            t.normalized
+            for t in self.token_list.tokens
+            if t.is_keyword and t.normalized not in self.MODIFIER_KEYWORDS
         ]
 
         # No keywords found
         if not keywords:
             return self.UNKNOWN_TYPE
 
-        # Need 2 keywords to determine the statement type (e.g.: CREATE TABLE)
-        if keywords[0] in {"CREATE", "ALTER", "DROP"}:
-            return " ".join(keywords[:2])
+        words = self._leading_unlexed_verb() + keywords
 
-        # Only one keyword (e.g.: SELECT, INSERT, DELETE, etc.)
-        return keywords[0]
+        # Only one word (e.g.: SELECT, INSERT, DELETE, etc.)
+        if words[0] not in self.OBJECT_VERBS:
+            return words[0]
+
+        # Verb plus the object it acts on, a qualifier extending the object
+        # name (e.g. CREATE MATERIALIZED VIEW).
+        parts: list[str] = [words[0]]
+        for word in words[1:]:
+            parts.append(word)
+            if word not in self.OBJECT_QUALIFIERS:
+                break
+
+        return " ".join(parts)
+
+    def _leading_unlexed_verb(self) -> list[str]:
+        """Return the leading verb when sqlparse did not lex it as a keyword."""
+        for token in self.token_list.tokens:
+            if token.is_whitespace:
+                continue
+            if token.is_keyword:
+                return []
+            verb = str(token.normalized).upper()
+            return [verb] if verb in self.UNLEXED_VERBS else []
+        return []
 
     @property
     def str_tokens(self) -> list[str]:
