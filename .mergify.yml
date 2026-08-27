@@ -1,7 +1,6 @@
 extends: .github
 shared:
   check_runs: &CheckRuns
-    - check-success=Test with Python 3.9
     - check-success=Test with Python 3.10
     - check-success=Test with Python 3.11
     - check-success=Test with Python 3.12
