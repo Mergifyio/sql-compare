@@ -15,7 +15,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -26,7 +25,7 @@ classifiers = [
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Testing :: Unit",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dynamic = ["version"]
 
 [project.urls]
@@ -37,7 +36,7 @@ repository = "https://github.com/Mergifyio/sql-compare"
 version = "0.0.0"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 sqlparse = ">=0.5.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -69,7 +68,9 @@ filterwarnings = ["error"]
 [tool.ruff]
 line-length = 88
 indent-width = 4
-target-version = "py312"
+# No target-version: ruff infers it from `requires-python`, so the two cannot
+# drift. Pinning py312 while the floor is 3.10 makes ruff demand PEP 695
+# syntax that is a SyntaxError on the 3.10 and 3.11 matrix legs.
 
 [tool.ruff.lint]
 preview = true
