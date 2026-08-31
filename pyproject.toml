@@ -44,7 +44,7 @@ ruff = ">=0.15.17,<0.16.0"
 mypy = "^1.19.1"
 pytest = "^8.4.2"
 poethepoet = ">=0.26.1,<0.38.0"
-deptry = ">=0.16.1,<0.24.0"
+deptry = ">=0.25.1,<0.26.0"
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
