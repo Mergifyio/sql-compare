@@ -196,6 +196,36 @@ def test_compare_neq(first_sql: str, second_sql: str) -> None:
         ),
         ("DROP TABLE foo", "DROP TABLE"),
         ("DROP INDEX foo_idx", "DROP INDEX"),
+        # A MATERIALIZED VIEW is its own kind of object, so the qualifier is
+        # part of the type. sqlparse does not lex REFRESH as a keyword, so it
+        # is recovered from the statement's first token.
+        (
+            "CREATE MATERIALIZED VIEW foo AS SELECT id FROM bar WITH NO DATA",
+            "CREATE MATERIALIZED VIEW",
+        ),
+        ("DROP MATERIALIZED VIEW foo", "DROP MATERIALIZED VIEW"),
+        ("ALTER MATERIALIZED VIEW foo RENAME TO bar", "ALTER MATERIALIZED VIEW"),
+        ("REFRESH MATERIALIZED VIEW foo", "REFRESH MATERIALIZED VIEW"),
+        ("CREATE OR REPLACE VIEW foo AS SELECT id FROM bar", "CREATE OR REPLACE VIEW"),
+        # Modifier keywords do not change what the object is.
+        ("CREATE TEMPORARY TABLE foo (id INT)", "CREATE TABLE"),
+        ("CREATE TEMP TABLE foo (id INT)", "CREATE TABLE"),
+        ("CREATE GLOBAL TEMPORARY TABLE foo (id INT)", "CREATE TABLE"),
+        ("CREATE LOCAL TEMPORARY TABLE foo (id INT)", "CREATE TABLE"),
+        ("CREATE RECURSIVE VIEW foo AS SELECT id FROM bar", "CREATE VIEW"),
+        ("CREATE UNIQUE INDEX foo_idx ON foo (id)", "CREATE INDEX"),
+        # UNLOGGED is not a keyword to sqlparse, it comes through as an
+        # Identifier exactly like a table name would. It is skipped by the
+        # is_keyword filter rather than by MODIFIER_KEYWORDS, so this pins the
+        # filter, not the modifier list.
+        ("CREATE UNLOGGED TABLE foo (id INT)", "CREATE TABLE"),
+        # TRUNCATE acts on a name, not on an object type, so it must stay out
+        # of OBJECT_VERBS: the next keyword is a trailing option, and pairing
+        # it with the verb would invent a type per spelling.
+        ("TRUNCATE foo", "TRUNCATE"),
+        ("TRUNCATE TABLE foo", "TRUNCATE"),
+        ("TRUNCATE foo CASCADE", "TRUNCATE"),
+        ("TRUNCATE foo RESTART IDENTITY", "TRUNCATE"),
     ],
 )
 def test_statement_type(sql: str, expected_type: str) -> None:
