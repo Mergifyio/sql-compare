@@ -4,6 +4,8 @@ shared:
     - check-success=Test with Python 3.10
     - check-success=Test with Python 3.11
     - check-success=Test with Python 3.12
+    - check-success=Test with Python 3.13
+    - check-success=Test with Python 3.14
     - check-success=semgrep
   default_review_cond: &DefaultReviewCond
     - "#approved-reviews-by>=1"
