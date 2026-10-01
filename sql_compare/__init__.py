@@ -92,22 +92,22 @@ class Token:
 
     @property
     def hash(self) -> str:
-        """Return the normalized token value."""
+        """The normalized token value."""
         return str(self.token.normalized)
 
     @property
     def ignore(self) -> bool:
-        """Return whether the token should be ignored."""
+        """Whether the token should be ignored."""
         return self.token.is_whitespace or self.is_comment
 
     @property
     def is_comment(self) -> bool:
-        """Return whether the token is a comment."""
+        """Whether the token is a comment."""
         return isinstance(self.token, sqlparse.sql.Comment)
 
     @property
     def is_separator(self) -> bool:
-        """Return whether the token is a separator."""
+        """Whether the token is a separator."""
         return bool(
             self.token.ttype == sqlparse.tokens.Punctuation
             and self.token.normalized == ",",
@@ -115,7 +115,7 @@ class Token:
 
     @property
     def str_tokens(self) -> list[str]:
-        """Return the token value."""
+        """The token value, or nothing if it is blank."""
         if self.hash.strip():
             return [self.hash]
         return []
@@ -141,22 +141,22 @@ class TokenList:
 
     @property
     def hash(self) -> str:
-        """Return the hash of the `TokenList` instance."""
+        """The hash of the `TokenList` instance."""
         return "".join(t.hash for t in self.tokens if not t.ignore)
 
     @property
     def ignore(self) -> bool:
-        """Return whether the token list should be ignored."""
+        """Whether the token list should be ignored."""
         return self.is_comment
 
     @property
     def is_comment(self) -> bool:
-        """Return whether the token list is a comment."""
+        """Whether the token list is a comment."""
         return isinstance(self.token_list, sqlparse.sql.Comment)
 
     @property
     def tokens(self) -> Generator[Token | TokenList, None, None]:
-        """Yield relevant tokens in a deterministic order."""
+        """Relevant tokens, in a deterministic order."""
         for token in self.token_list.tokens:
             if token.is_group:
                 if UnorderedTokenList.is_unordered(token, self.statement_type):
@@ -168,7 +168,7 @@ class TokenList:
 
     @property
     def statement_type(self) -> str:
-        """Return the type of SQL statement."""
+        """The type of SQL statement."""
         if self.parent:
             return self.parent.statement_type
 
@@ -176,7 +176,7 @@ class TokenList:
 
     @property
     def str_tokens(self) -> list[str]:
-        """Return the reconstructed SQL statement from tokens as a list of strings."""
+        """The reconstructed SQL statement from tokens, as a list of strings."""
         return [t.hash for t in self.tokens if not t.ignore]
 
 
@@ -212,7 +212,7 @@ class Statement(TokenList):
 
     @property
     def statement_type(self) -> str:
-        """Return the type of SQL statement."""
+        """The type of SQL statement."""
         keywords: list[str] = [
             t.normalized
             for t in self.token_list.tokens
@@ -252,7 +252,7 @@ class Statement(TokenList):
 
     @property
     def str_tokens(self) -> list[str]:
-        """Return the reconstructed SQL statement from tokens as a list of strings."""
+        """The reconstructed SQL statement from tokens, as a list of strings."""
         return [t for token in self.tokens for t in token.str_tokens]
 
 
@@ -271,7 +271,7 @@ class UnorderedTokenList(TokenList):
 
     @property
     def tokens(self) -> Generator[Token | TokenList, None, None]:
-        """Yield relevant tokens in a deterministic order."""
+        """Relevant tokens, in a deterministic order."""
         filtered_tokens = [t for t in self.flatten_tokens if not t.ignore]
 
         # Split punctuations and identifiers (columns, types, etc.)
@@ -289,7 +289,7 @@ class UnorderedTokenList(TokenList):
 
     @property
     def flatten_tokens(self) -> Generator[Token, None, None]:
-        """Yield all tokens in the token tree."""
+        """All tokens in the token tree."""
         yield from (Token(t) for t in self.token_list.flatten())  # type: ignore[no-untyped-call]
 
     @staticmethod
