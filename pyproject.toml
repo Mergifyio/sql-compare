@@ -42,7 +42,7 @@ python = "^3.10"
 sqlparse = ">=0.6.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = ">=0.17.0,<0.18.0"
+ruff = ">=0.17.1,<0.18.0"
 mypy = "^2.4.0"
 pytest = "^9.1.1"
 poethepoet = ">=0.49.0,<0.50.0"
